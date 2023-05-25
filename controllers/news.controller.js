@@ -39,8 +39,20 @@ module.exports.newsController = {
   },
   deleteNews: async (req, res) => {
     try {
-      const data = await findByIdAndRemove(req.body.id);
+      await findByIdAndRemove(req.body.id);
       res.json("Новость удалена");
+    } catch (error) {
+      res.json(error);
+    }
+  },
+  patchNews: async (req, res) => {
+    try {
+      await News.findByIdAndUpdate(req.body.id, {
+        title: req.body.title,
+        description: req.body.description,
+        categoryId: req.body.categoryId,
+      });
+      res.json("Новость обновлена");
     } catch (error) {
       res.json(error);
     }
